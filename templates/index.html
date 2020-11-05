@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Рецепты {% endblock %}
+{% load static %}
+{% csrf_token %}
+{% block static %}
+<link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+{% load recipe_filters %}
+{% block content %}
+    <main class="main container">
+        <div class="main__header">
+            <h1 class="main__title">Рецепты</h1>
+          {% include 'tags-check-box.html' %}
+        </div>
+        <div class="card-list">
+            {% for recipe in recipes %}
+            {% include 'recipe_item.html' %}
+            {% endfor %}
+        </div>
+        {% if page.has_other_pages %}
+        {% include 'paginator.html' %}
+        {% endif %}
+    </main>
+
+{% endblock %}
+
+

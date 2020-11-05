@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title%} Рецепты {% endblock%}
+    {% load static %}
+    {% csrf_token %}
+    {% block static %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+    {% endblock %}
+    {% load recipe_filters %}
+    {% block content %}
+    <main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">{{ author.username|get_user_name  }} </h1>
+        {% include 'tags-check-box.html' %}
+    </div>
+    {% if user.username != author.username %}
+
+        <div class="author-subscribe" data-author="{{ profile.id }}">
+        {% if user.is_authenticated %}
+        {% if following %}
+            <button class="button button_style_light-blue button_size_auto" name="subscribe"><span class="icon-check button__icon"></span>Отписаться от автора </button></p>
+        {% else %}
+            <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_auto" name="subscribe" data-out>Подписаться на автора</button></p>
+        {% endif %}
+        {% endif %}
+        </div>
+
+        {% endif %}
+
+        <div class="card-list">
+            {% for recipe in recipes %}
+            {% include 'recipe_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    </main>
+    {% endblock %}
