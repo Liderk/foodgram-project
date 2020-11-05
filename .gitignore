@@ -131,3 +131,5 @@ dmypy.json
 static/
 
 temlate_front
+.idea/
+media/
