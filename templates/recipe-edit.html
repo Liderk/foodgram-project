@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title%} Добавить рецепт {% endblock%}
+    {% load static %}
+    {% block new_recipe %} <li class="nav__item nav__item_active"> {% endblock %}
+    {% csrf_token %}
+        {% load static %}
+        {% block static %}
+        <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+        {% endblock %}
+{% load recipe_filters %}
+{% block content %}
+     <div class="main__header">
+        <h1 class="main__title">Редактирование рецепта</h1>
+    </div>
+
+    <!--Загрузка контейнера с редактированием рецепта-->
+    {% include 'base-recipe.html' %}
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+<script src="{% static 'js/utils/debouncing.js' %}"></script>
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'js/formRecipe.js' %}"></script>
+{% endblock %}

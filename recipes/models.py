@@ -42,7 +42,7 @@ class Recipe(models.Model):
     slug = models.SlugField()
 
     def __str__(self):
-        # выводим текст рецепта
+        # выводим название рецепта
         return self.title
 
     class Meta:

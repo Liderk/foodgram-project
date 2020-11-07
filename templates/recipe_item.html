@@ -1,8 +1,8 @@
 {% load recipe_filters %}
 <div class="card" data-id="{{ recipe.id }}">
-            <a href="{% url 'recipe_view' recipe.author.username recipe.id %}" class="link" target="_blank"><img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="card__image"></a>
+            <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="card__image"></a>
             <div class="card__body">
-                <a class="card__title link" href="{% url 'recipe_view' recipe.author.username recipe.id %}" target="_blank">{{ recipe.title }}</a>
+                <a class="card__title link" href="{% url 'recipe_view' recipe.id %}" target="_blank">{{ recipe.title }}</a>
                 <ul class="card__items">
                     {% for tag in recipe.tag.all %}
                     <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span></li>
