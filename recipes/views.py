@@ -108,9 +108,9 @@ def recipe_view(request, recipe_id):
     return render(request, 'single_recipe.html', context)
 
 
-def follow(request, username):
-    user = get_object_or_404(User, username=username)
-    author_list = Follow.objects.filter(user=user).all()
+def follow(request):
+    author_list = Follow.objects.filter(user=request.user).all()
+    recipe_list = Recipe
     return render(
         request,
         'follow.html',

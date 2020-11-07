@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Подписки{% endblock %}
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">Подписки</h1>
+    </div>
+
+    {% include 'following.html' %}
+
+    <!-- Паджинатор -->
+    {% if page.has_other_pages %}
+        <ul class="pagination justify-content-center">
+            {% include "paginator.html" with items=page paginator=paginator %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
