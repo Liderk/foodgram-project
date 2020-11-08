@@ -27,7 +27,7 @@ class Recipe(models.Model):
         on_delete=models.CASCADE,
         related_name='recipe_author'
     )
-    title = models.CharField(verbose_name='recipe name', max_length=255)
+    title = models.CharField(verbose_name='recipe name', max_length=255, )
     description = models.TextField(verbose_name='description')
     tag = models.ManyToManyField(Tag, blank=True)
     pub_date = models.DateTimeField("date published", auto_now_add=True,

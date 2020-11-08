@@ -110,11 +110,13 @@ def recipe_view(request, recipe_id):
 
 def follow(request):
     author_list = Follow.objects.filter(user=request.user).all()
-    recipe_list = Recipe
+    recipe = Recipe.objects.filter(author__in=(item.author.id for item in author_list)).order_by(
+        '-pub_date').all()
+
     return render(
         request,
         'follow.html',
-        {'authors': author_list}
+        {'authors': author_list, 'recipes': recipe}
     )
 
 
