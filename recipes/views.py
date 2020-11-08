@@ -92,12 +92,15 @@ def recipe_edit(request, recipe_id):
     return render(
         request,
         'recipe-edit.html',
-        {'form': form, 'recipe': recipe, 'edit': 'True', 'ingredients': ing }
+        {'form': form, 'recipe': recipe, 'edit': 'True', 'ingredients': ing}
     )
 
 
-def recipe_delete():
-    return None
+def recipe_delete(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    if request.user == recipe.author:
+        recipe.delete()
+    return redirect('index')
 
 
 def recipe_view(request, recipe_id):
@@ -110,22 +113,26 @@ def recipe_view(request, recipe_id):
 
 def follow(request):
     author_list = Follow.objects.filter(user=request.user).all()
-    recipe = Recipe.objects.filter(author__in=(item.author.id for item in author_list)).order_by(
-        '-pub_date').all()
-
     return render(
         request,
         'follow.html',
-        {'authors': author_list, 'recipes': recipe}
+        {'authors': author_list}
     )
 
 
-def follow_recipe():
-    return None
+def favorites_recipe(request):
+    recipe_list = Recipe.objects.filter(favor__user__id=request.user.id).all()
+    context = get_tag(request, recipe_list)
+    return render(request, 'index.html', context)
 
 
-def shopping_list():
-    return None
+def shopping_list(request):
+    shopping_list = ShoppingList.objects.select_related('recipe').filter(
+        user=request.user.id
+    )
+    context = {'shopping_list': shopping_list}
+    return render(request, 'shoplist.html',  context)
+
 
 
 def download():

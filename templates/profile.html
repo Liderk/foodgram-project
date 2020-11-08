@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
     {% endblock %}
     {% load recipe_filters %}
+    {% block nav %}
+        {% include 'nav.html' %}
+    {% endblock %}
     {% block content %}
     <main class="main container">
     <div class="main__header">

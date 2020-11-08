@@ -81,7 +81,7 @@ class ShoppingList(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='shopping_list'
+        related_name='recipe_list'
     )
 
     def __str__(self):

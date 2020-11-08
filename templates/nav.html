@@ -1,12 +1,15 @@
+{% load recipe_filters %}
+{% csrf_token %}
 <nav class="nav">
     <div class="nav__container container">
         {% if user.is_authenticated %}
         <ul class="nav__items list">
-            {% block index %}<li class="nav__item nav__item_active">{% endblock %}<a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
-            {% block subs %}<li class="nav__item ">{% endblock %}<a href="{% url 'follow' %}" class="nav__link link">Мои подписки</a></li>
-            {% block new_recipe %}<li class="nav__item">{% endblock %}<a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
-            {% block favorites %}<li class="nav__item">{% endblock %}<a href="{% url 'favorites' %}" class="nav__link link">Избранное</a></li>
-            {% block shop %}<li class="nav__item">{% endblock %}<a href="{% url 'shopping-list' %}" class="nav__link link">Список покупок</a> <span  class="badge badge_style_blue nav__badge" id="counter">{% if count %}{{ count }}{% endif %}</span></li>
+            <li class="nav__item {% if index %}nav__item_active{% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+            <li class="nav__item {% if follow %}nav__item_active{% endif %}"><a href="{% url 'follow' %}" class="nav__link link">Мои подписки</a></li>
+            <li class="nav__item {% if new_recipe %}nav__item_active{% endif %}"><a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
+            <li class="nav__item {% if favorites %}nav__item_active{% endif %}"><a href="{% url 'favorites' %}" class="nav__link link">Избранное</a></li>
+            <li class="nav__item {% if shopping_list %}nav__item_active{% endif %}"><a href="{% url 'shopping-list' %}" class="nav__link link">Список покупок</a>
+                <span  class="badge badge_style_blue nav__badge" id="counter">{% shoplist_count user %}</span></li>
         </ul>
         <ul class="nav__items list">
             {% block pass_change %}<li class="nav__item">{% endblock %}<a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a></li>
@@ -15,6 +18,7 @@
         {% else %}
         <ul class="nav__items list">
             <li class="nav__item nav__item_active"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+
         </ul>
         <ul class="nav__items list">
             {% block login %}<li class="nav__item">{% endblock %}<a href="{% url 'login'%}" class="nav__link link">Войти</a></li>

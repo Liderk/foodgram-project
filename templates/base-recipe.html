@@ -49,8 +49,7 @@
                     <label for="cantidad" class="form__label" id="cantidadVal">{{шт}}.</label>
                 </div>
                 <div class="form__field-group-ingredientes-container">
-
-                {% if ingredients %}
+               {% if ingredients %}
                         {% for ing in ingredients %}
 
                         <div class="form__field-item-ingredient" id="ing_{{ing.ingredients.id}}">

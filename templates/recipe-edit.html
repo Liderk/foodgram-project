@@ -7,6 +7,9 @@
         {% block static %}
         <link rel="stylesheet" href="{% static 'pages/form.css' %}">
         {% endblock %}
+    {% block nav %}
+        {% include 'nav.html'  %}
+    {% endblock %}
 {% load recipe_filters %}
 {% block content %}
      <div class="main__header">

@@ -7,14 +7,15 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{% block title%}Some title{% endblock %}</title>
         {% load static %}
-        {% csrf_token %}
         {% block static %}
         <link rel="stylesheet" href="{% static 'pages/form.css' %}">
         {% endblock %}
     </head>
     <body class="body">
+    {% csrf_token %}
         <header class="header">
-            {% include 'nav.html' %}
+          <!-- Загрузка Nav бар -->
+        {% block nav %}{% endblock %}
         </header>
         <main class="main container">
             <div class="container">

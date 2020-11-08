@@ -1,6 +1,7 @@
 from django import template
 from recipes.models import FavoriteRecipe, ShoppingList
 from django.contrib.auth import get_user_model
+from recipes.models import FavoriteRecipe
 
 User = get_user_model()
 
@@ -37,3 +38,18 @@ def get_user_name(value):
     if user.first_name or user.last_name:
         return f'{user.first_name} {user.last_name}'
     return user.username
+
+
+@register.filter
+def is_favorite(recipe, user):
+    return FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists()
+
+
+@register.filter
+def is_shop(recipe, user):
+    return ShoppingList.objects.filter(user=user, recipe=recipe).exists()
+
+
+@register.simple_tag
+def shoplist_count(user):
+    return ShoppingList.objects.filter(user=user).distinct().count()
