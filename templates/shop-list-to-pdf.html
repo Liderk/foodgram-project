@@ -3,24 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+           table {
+            width: 800px; /* Ширина таблицы */
+            border: 1px solid DeepSkyBlue; /* Рамка вокруг таблицы */
+            margin: auto; /* Выравниваем таблицу по центру окна  */
+           }
+           td {
+                text-align: center; /* Выравниваем текст по центру ячейки */
+              }
+    </style>
 </head>
 <body>
 <table>
-        <h1>Список покупок</h1>
+        <h1 align="center">Список покупок</h1>
   <colgroup>
-    <col span="2" style="background:Khaki"><!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
+    <col span="2" style="background:PaleTurquoise"><!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
     <col style="background-color:LightCyan"><!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
   </colgroup>
      <tr>
     <th>№ п/п</th>
     <th>Наименование</th>
-    <th>Колличество.</th>
+    <th>Колличество</th>
   </tr>
     {% for key, value in data.items %}
     <tr>
-        <td>{{ forloop.counter }} </td>
+        <td style='width:10px'>{{ forloop.counter }} </td>
         <td>{{key}}</td>
-        <td>{{ value}}</td>
+        {% for dimension, quantity in value.items %}
+            <td>{{ quantity }} {{ dimension }}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
 </table>

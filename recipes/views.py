@@ -1,25 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.generic.base import View
-from recipes.models import Tag, Ingredients, Recipe, RecipeIngredients, \
-    FavoriteRecipe, ShoppingList, User
-from users.models import Follow
-from .forms import RecipeForm
-from .utils import gen_shopping_list, get_ingredients
 
-from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
+from .forms import RecipeForm
+from recipes.models import Ingredients, Recipe, RecipeIngredients, \
+    ShoppingList, User
+from users.models import Follow
+from .utils import gen_shopping_list, get_ingredients, get_recipe
+
+from wkhtmltopdf.views import PDFTemplateResponse
 
 # Количество рецептов на странице
 PAGES = 6
-
-
-def get_recipe(request, recipe_list):
-    all_tags = Tag.objects.all()
-    noted_tags = request.GET.getlist('filters')
-    if noted_tags:
-        recipe_list = recipe_list.filter(tag__name__in=noted_tags).distinct()
-    context = {'recipes': recipe_list, 'tags': all_tags}
-    return context
 
 
 def index(request):
@@ -50,6 +43,7 @@ def profile(request, username):
     return render(request, 'profile.html', context)
 
 
+@login_required
 def new_recipe(request):
     user = User.objects.get(username=request.user)
     if request.method == 'POST':
@@ -76,6 +70,7 @@ def new_recipe(request):
     return render(request, 'new_recipe.html', {'form': form})
 
 
+@login_required
 def recipe_edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     ing = RecipeIngredients.objects.filter(recipe=recipe_id).all()
@@ -116,6 +111,7 @@ def recipe_edit(request, recipe_id):
     )
 
 
+@login_required
 def recipe_delete(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.user == recipe.author:
@@ -131,6 +127,7 @@ def recipe_view(request, recipe_id):
     return render(request, 'single_recipe.html', context)
 
 
+@login_required
 def follow(request):
     author_list = Follow.objects.filter(user=request.user).all()
     paginator = Paginator(author_list, PAGES)

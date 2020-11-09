@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from .models import Tag
 
 
 User = get_user_model()
@@ -12,14 +13,14 @@ def gen_shopping_list(request):
     for item in shopping_list:
         for j in item.recipe.recipeingredients_set.all():
             name = j.ingredients.title
-            quantity = f'{j.quantity} ({j.ingredients.dimension})'
+            amount = {}
             if name in ingredients.keys():
-                ingredients[name] += quantity
+                ingredients[name][j.ingredients.dimension] += j.quantity
+                continue
             else:
-                ingredients[name] = quantity
-    # result = []
-    # for key, quantity in ingredients.items():
-    #     result.append(f'{key} - {quantity}')
+                amount[j.ingredients.dimension] = j.quantity
+            ingredients[name] = amount.copy()
+    print(ingredients)
     return ingredients
 
 
@@ -30,3 +31,12 @@ def get_ingredients(request):
             _ = key.split('_')
             ingredients[ingredient_name] = int(request.POST[f'valueIngredient_{_[1]}'])
     return ingredients
+
+
+def get_recipe(request, recipe_list):
+    all_tags = Tag.objects.all()
+    noted_tags = request.GET.getlist('filters')
+    if noted_tags:
+        recipe_list = recipe_list.filter(tag__name__in=noted_tags).distinct()
+    context = {'recipes': recipe_list, 'tags': all_tags}
+    return context
