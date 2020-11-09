@@ -7,20 +7,20 @@ User = get_user_model()
 
 def gen_shopping_list(request):
     shopper = get_object_or_404(User, username=request.user.username)
-    shopping_list = shopper.Shopper.all()
+    shopping_list = shopper.shopper.all()
     ingredients = {}
     for item in shopping_list:
         for j in item.recipe.recipeingredients_set.all():
-            name = f'{j.ingredient.title} ({j.ingredient.dimension})'
-            amount = j.amount
+            name = j.ingredients.title
+            quantity = f'{j.quantity} ({j.ingredients.dimension})'
             if name in ingredients.keys():
-                ingredients[name] += amount
+                ingredients[name] += quantity
             else:
-                ingredients[name] = amount
-    result = []
-    for key, amount in ingredients.items():
-        result.append(f'{key} - {amount}')
-    return result
+                ingredients[name] = quantity
+    # result = []
+    # for key, quantity in ingredients.items():
+    #     result.append(f'{key} - {quantity}')
+    return ingredients
 
 
 def get_ingredients(request):

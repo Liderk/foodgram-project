@@ -47,7 +47,7 @@
         {% endfor %}
     </div>
     {% if page.has_other_pages %}
-    {% include 'paginator.html' %}
+    {% include 'paginator.html' with items=page paginator=paginator%}
     {% endif %}
 </main>
 <script src="{% static 'js/config/config.js' %}"></script>

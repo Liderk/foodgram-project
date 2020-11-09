@@ -1,4 +1,6 @@
 from django.urls import path
+from wkhtmltopdf.views import PDFTemplateView
+from .views import Download
 
 from . import views
 
@@ -11,7 +13,8 @@ urlpatterns = [
     path("followings/", views.follow, name='follow'),
     path('recipe/favorites/', views.favorites_recipe, name='favorites'),
     path('shopping-list/', views.shopping_list, name='shopping-list'),
-    path('download', views.download, name='download'),
+    # path('download', views.download, name='download'),
+    path('download', Download.as_view(), name='download'),
     path("<username>/", views.profile, name='profile'),
     path('', views.index, name='index'),
 ]

@@ -7,7 +7,7 @@
 {% endblock %}
 {% load recipe_filters %}
 {% block nav %}
-    {% include 'nav.html' with favorites=True %}
+    {% include 'nav.html' with index=True %}
 {% endblock %}
 {% block content %}
     <main class="main container">
@@ -16,12 +16,12 @@
           {% include 'tags-check-box.html' %}
         </div>
         <div class="card-list">
-            {% for recipe in recipes %}
+            {% for recipe in page %}
             {% include 'recipe_item.html' %}
             {% endfor %}
         </div>
         {% if page.has_other_pages %}
-            {% include 'paginator.html' %}
+            {% include 'paginator.html' with items=page paginator=paginator%}
         {% endif %}
     </main>
     <script src="{% static 'js/config/config.js' %}"></script>

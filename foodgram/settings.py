@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'users',
     'recipes',
     'api',
+    'wkhtmltopdf',
     "django.contrib.sites",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,6 +132,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD_OPTIONS = {
+    'margin-bottom': 10,
+    'margin-left': 20,
+    'margin-right': 10,
+    'margin-top': 10,
+}
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

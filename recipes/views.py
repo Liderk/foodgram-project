@@ -1,12 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator
+from django.views.generic.base import View
 from recipes.models import Tag, Ingredients, Recipe, RecipeIngredients, \
     FavoriteRecipe, ShoppingList, User
 from users.models import Follow
 from .forms import RecipeForm
 from .utils import gen_shopping_list, get_ingredients
 
+from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
 
-def get_tag(request, recipe_list):
+# Количество рецептов на странице
+PAGES = 6
+
+
+def get_recipe(request, recipe_list):
     all_tags = Tag.objects.all()
     noted_tags = request.GET.getlist('filters')
     if noted_tags:
@@ -17,16 +24,29 @@ def get_tag(request, recipe_list):
 
 def index(request):
     recipe_list = Recipe.objects.all()
-    context = get_tag(request, recipe_list)
+    recipe_by_tag = get_recipe(request, recipe_list)
+    paginator = Paginator(recipe_by_tag.get('recipes'), PAGES)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator, **recipe_by_tag}
     return render(request, 'index.html', context)
 
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     recipe = Recipe.objects.filter(author=author).all()
-    recipe_by_tag = get_tag(request, recipe)
     following = Follow.objects.filter(author=author, user=request.user.id)
-    context = {'author': author, 'following': following, **recipe_by_tag}
+    recipe_by_tag = get_recipe(request, recipe)
+    paginator = Paginator(recipe_by_tag.get('recipes'), PAGES)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {
+        'author': author,
+        'following': following,
+        **recipe_by_tag,
+        'page': page,
+        'paginator': paginator
+    }
     return render(request, 'profile.html', context)
 
 
@@ -113,17 +133,21 @@ def recipe_view(request, recipe_id):
 
 def follow(request):
     author_list = Follow.objects.filter(user=request.user).all()
-    return render(
-        request,
-        'follow.html',
-        {'authors': author_list}
-    )
+    paginator = Paginator(author_list, PAGES)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator, 'authors': author_list}
+    return render(request, 'follow.html', context)
 
 
 def favorites_recipe(request):
     recipe_list = Recipe.objects.filter(favor__user__id=request.user.id).all()
-    context = get_tag(request, recipe_list)
-    return render(request, 'index.html', context)
+    recipe_by_tag = get_recipe(request, recipe_list)
+    paginator = Paginator(recipe_by_tag.get('recipes'), PAGES)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    context = {'page': page, 'paginator': paginator, **recipe_by_tag}
+    return render(request, 'favorites.html', context)
 
 
 def shopping_list(request):
@@ -131,9 +155,19 @@ def shopping_list(request):
         user=request.user.id
     )
     context = {'shopping_list': shopping_list}
-    return render(request, 'shoplist.html',  context)
+    return render(request, 'shoplist.html', context)
 
 
+class Download(View):
+    template = 'shop-list-to-pdf.html'
 
-def download():
-    return None
+    def get(self, request):
+        result = gen_shopping_list(request)
+        context = {'data': result}
+        return PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename="my_purchases.pdf",
+            context=context,
+            show_content_in_browser=False,
+            )

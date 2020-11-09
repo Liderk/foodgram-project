@@ -30,10 +30,13 @@
         {% endif %}
 
         <div class="card-list">
-            {% for recipe in recipes %}
+            {% for recipe in page %}
             {% include 'recipe_item.html' %}
             {% endfor %}
         </div>
     </div>
+        {% if page.has_other_pages %}
+            {% include 'paginator.html' with items=page paginator=paginator%}
+        {% endif %}
     </main>
     {% endblock %}

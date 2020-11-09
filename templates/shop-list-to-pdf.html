@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+        <h1>Список покупок</h1>
+  <colgroup>
+    <col span="2" style="background:Khaki"><!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
+    <col style="background-color:LightCyan"><!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
+  </colgroup>
+     <tr>
+    <th>№ п/п</th>
+    <th>Наименование</th>
+    <th>Колличество.</th>
+  </tr>
+    {% for key, value in data.items %}
+    <tr>
+        <td>{{ forloop.counter }} </td>
+        <td>{{key}}</td>
+        <td>{{ value}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
