@@ -1,6 +1,6 @@
+from recipes.models import FavoriteRecipe, Ingredients, ShoppingList
 from rest_framework import serializers
 
-from recipes.models import Ingredients, ShoppingList, FavoriteRecipe
 from users.models import Follow
 
 

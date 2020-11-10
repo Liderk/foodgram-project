@@ -1,15 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
-
-from .forms import RecipeForm
-from recipes.models import Ingredients, Recipe, RecipeIngredients, \
-    ShoppingList, User
-from users.models import Follow
-from .utils import gen_shopping_list, get_ingredients, get_recipe
-
 from wkhtmltopdf.views import PDFTemplateResponse
+
+from recipes.models import (Ingredients, Recipe, RecipeIngredients,
+                            ShoppingList, User)
+from users.models import Follow
+from .forms import RecipeForm
+from .utils import gen_shopping_list, get_ingredients, get_recipe
 
 # Количество рецептов на странице
 PAGES = 6

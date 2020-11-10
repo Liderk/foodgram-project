@@ -1,5 +1,4 @@
 from rest_framework import permissions, exceptions
-from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class MethodPermissions(permissions.BasePermission):

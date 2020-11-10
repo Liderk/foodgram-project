@@ -1,5 +1,5 @@
 from django import template
-from recipes.models import FavoriteRecipe, ShoppingList
+from recipes.models import ShoppingList
 from django.contrib.auth import get_user_model
 from recipes.models import FavoriteRecipe
 

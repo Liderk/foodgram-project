@@ -1,21 +1,13 @@
-from rest_framework import generics, filters, mixins, viewsets, status
-
-from .permissions import MethodPermissions
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
-
-from recipes.models import Recipe, Ingredients, ShoppingList, FavoriteRecipe
-from users.models import Follow
-
-from .serializers import IngredientsSerializer, \
-    FollowSerializer, \
-    FavoriteSerializer, \
-    PurchaseSerializer
-
 from django.db.utils import IntegrityError
+from recipes.models import FavoriteRecipe, Ingredients, Recipe, ShoppingList
+from rest_framework import filters, generics, mixins, status, viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from django.shortcuts import get_object_or_404
+from users.models import Follow
+from .serializers import (FavoriteSerializer, FollowSerializer,
+                          IngredientsSerializer, PurchaseSerializer)
 
 User = get_user_model()
 
@@ -92,15 +84,3 @@ def api_follow_detail(request, user_id):
             Follow, user=request.user, author=cook)
         follow.delete()
         return Response({'success': True})
-
-
-# class PurchaseViewSet(viewsets.ModelViewSet):
-#     serializer_class = PurchaseSerializer
-#     permission_classes = [MethodPermissions]
-#
-#     def get_queryset(self):
-#         recipe_id = self.kwargs.get('recipe_id')
-#         user = self.request.user
-#         recipe = generics.get_object_or_404(Recipe, pk=recipe_id)
-#         queryset = ShoppingList.objects.filter(recipe=recipe, user=user)
-#         return queryset
