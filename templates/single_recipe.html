@@ -40,7 +40,7 @@
                 </div>
                 <ul class="single-card__items">
                      <li class="single-card__item">{% include 'button_buy.html' %}</li>
-                    {% if user.username != profile.username %}
+                    {% if user.username != author.username %}
                     {% if user.is_authenticated %}
                         {% if following %}
                         <li class="single-card__item"><button class="button button_style_light-blue button_size_auto" name="subscribe"><span class="icon-check button__icon"></span> Отписаться от автора </button>
