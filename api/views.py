@@ -1,4 +1,4 @@
-from rest_framework import generics, filters, mixins, viewsets, status, permissions
+from rest_framework import generics, filters, mixins, viewsets, status
 
 from .permissions import MethodPermissions
 from rest_framework.response import Response

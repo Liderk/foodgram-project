@@ -28,8 +28,13 @@ SECRET_KEY = '-rvt(c8c#^844_w$k$a%nc_zd$dveijx9l-bn3541*uj@v*38@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
-
-ALLOWED_HOSTS = []
+# DEBUG = False
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "[::1]",
+    "testserver",
+]
 
 
 # Application definition
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'api',
     'wkhtmltopdf',
     'rest_framework',
+    'django.contrib.flatpages',
     "django.contrib.sites",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -156,4 +162,4 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
-SITE_ID = 1
+SITE_ID = 2
