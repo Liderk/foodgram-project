@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 import os
 env = environ.Env()
-env.read_env(env.str('ENV_PATH', './.env/.debug_env'))
+env.read_env(env.str('ENV_PATH', './.env/.deb_env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +28,7 @@ SECRET_KEY = '-rvt(c8c#^844_w$k$a%nc_zd$dveijx9l-bn3541*uj@v*38@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
+
 # DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
@@ -94,23 +95,24 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 # Для прохождения первого ревью, добавляю использование БД Sqlite3
 # в дальнейшем удалю и перейду обратно на postgresql
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': os.environ.get('DB_ENGINE'),
-#         'NAME': os.environ.get('DB_NAME'),
-#         'USER': os.environ.get('DB_USER'),
-#         'PASSWORD': os.environ.get('DB_PASSWORD'),
-#         'HOST': os.environ.get('DB_HOST'),
-#         'PORT': os.environ.get('DB_PORT'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
 
 
 # Password validation

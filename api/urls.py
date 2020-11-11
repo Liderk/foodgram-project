@@ -13,5 +13,4 @@ urlpatterns = [
     path('purchases/<recipe_id>', api_purchase_detail),
     path('favorites/<recipe_id>', api_favorite_detail),
     path('subscriptions/<user_id>', api_follow_detail),
-    path("", include(router.urls)),
 ]

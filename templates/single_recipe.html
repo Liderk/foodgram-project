@@ -12,7 +12,7 @@
     {% load recipe_filters %}
     <main class="main container">
         <div class="single-card" data-id="{{ recipe.id }}" data-author="{{ author.id }}">
-            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="single-card__image"></a>
+            <img  src="{% if recipe.image %} {{ recipe.image.url }} {% endif %}"  alt="Автор не загрузил фото к этому рецепту" class="single-card__image"></a>
             <div class="single-card__info">
                 <div class="single-card__header-info">
                     <h1 class="single-card__title"> {{ recipe.title }} </h1>
