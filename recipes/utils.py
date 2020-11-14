@@ -8,18 +8,21 @@ User = get_user_model()
 
 def gen_shopping_list(request):
     shopper = get_object_or_404(User, username=request.user.username)
-    shopping_list = shopper.shopper.all()
+    shopping_list = shopper.shopping_list.all()
     ingredients = {}
     for item in shopping_list:
-        for j in item.recipe.recipeingredients_set.all():
-            name = j.ingredients.title
+        for obj in item.recipe.recipeingredient.all():
+            name = obj.ingredient.title
             amount = {}
-            if name in ingredients.keys():
-                ingredients[name][j.ingredients.dimension] += j.quantity
+            # как изменить значение в словаре, который находится внутри другого
+            # словаря, без проверки, я не придумал
+            if name in ingredients:
+                ingredients[name][obj.ingredient.dimension] += obj.quantity
                 continue
             else:
-                amount[j.ingredients.dimension] = j.quantity
+                amount[obj.ingredient.dimension] = obj.quantity
             ingredients[name] = amount.copy()
+    print(ingredients)
     return ingredients
 
 
@@ -34,10 +37,10 @@ def get_ingredients(request):
     return ingredients
 
 
-def get_recipe(request, recipe_list):
+def get_recipe(request, recipes):
     all_tags = Tag.objects.all()
     noted_tags = request.GET.getlist('filters')
     if noted_tags:
-        recipe_list = recipe_list.filter(tag__name__in=noted_tags).distinct()
-    context = {'recipes': recipe_list, 'tags': all_tags}
+        recipes = recipes.filter(tag__name__in=noted_tags).distinct()
+    context = {'recipes': recipes, 'tags': all_tags}
     return context

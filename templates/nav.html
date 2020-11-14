@@ -22,7 +22,7 @@
 
         </ul>
         <ul class="nav__items list">
-            {% block login %}<li class="nav__item">{% endblock %}<a href="{% url 'login'%}" class="nav__link link">Войти</a></li>
+            {% block login %}<li class="nav__item">{% endblock %}<a href="{% url 'login' %}" class="nav__link link">Войти</a></li>
             {% block create_acc %}<li class="nav__item">{% endblock %}<a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a></li>
         </ul>
         {% endif %}

@@ -29,7 +29,7 @@
     {% for key, value in data.items %}
     <tr>
         <td style='width:10px'>{{ forloop.counter }} </td>
-        <td>{{key}}</td>
+        <td>{{ key }}</td>
         {% for dimension, quantity in value.items %}
             <td>{{ quantity }} {{ dimension }}</td>
         {% endfor %}

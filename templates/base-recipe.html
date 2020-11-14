@@ -46,18 +46,18 @@
                         <div class="form__dropdown-items"></div>
                     </div>
                     <input type="number" id="cantidad" class="form__input" min="0">
-                    <label for="cantidad" class="form__label" id="cantidadVal">{{шт}}.</label>
+                    <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                 </div>
                 <div class="form__field-group-ingredientes-container">
                {% if ingredients %}
                         {% for ing in ingredients %}
 
-                        <div class="form__field-item-ingredient" id="ing_{{ing.ingredients.id}}">
-                            <span> {{ing.ingredients.title}} {{ing.quantity}}{{ ing.ingredients.dimension }}</span>
+                        <div class="form__field-item-ingredient" id="ing_{{ ing.ingredients.id }}">
+                            <span> {{ ing.ingredient.title }} {{ ing.quantity }}{{ ing.ingredient.dimension }}</span>
                             <span class="form__field-item-delete"></span>
-                            <input id="nameIngredient_{{ing.ingredients.id}}" name="nameIngredient_{{ing.ingredients.id}}" type="hidden" value="{{ing.ingredients.title}}">
-                            <input id="valueIngredient_{{ing.ingredients.id}}" name="valueIngredient_{{ing.ingredients.id}}" type="hidden" value="{{ing.quantity}}">
-                            <input id="unitsIngredient_{{ing.ingredients.id}}" name="unitsIngredient_{{ing.ingredients.id}}" type="hidden" value="{{ ing.ingredients.dimension }}">
+                            <input id="nameIngredient_{{ ing.ingredient.id }}" name="nameIngredient_{{ ing.ingredient.id }}" type="hidden" value="{{ ing.ingredient.title }}">
+                            <input id="valueIngredient_{{ ing.ingredient.id }}" name="valueIngredient_{{ ing.ingredient.id }}" type="hidden" value="{{ ing.quantity }}">
+                            <input id="unitsIngredient_{{ ing.ingredient.id }}" name="unitsIngredient_{{ ing.ingredient.id }}" type="hidden" value="{{ ing.ingredient.dimension }}">
                         </div>
 
 

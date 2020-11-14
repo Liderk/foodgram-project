@@ -13,7 +13,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Ingredients(models.Model):
+class Ingredient(models.Model):
     title = models.CharField(max_length=50)
     dimension = models.CharField(max_length=10, verbose_name='Количество')
 
@@ -25,47 +25,46 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='recipe_author'
+        related_name='recipe'
     )
-    title = models.CharField(verbose_name='recipe name', max_length=255, )
+    title = models.CharField(verbose_name='recipe name', max_length=255)
     description = models.TextField(verbose_name='description')
     tag = models.ManyToManyField(Tag, blank=True)
-    pub_date = models.DateTimeField("date published", auto_now_add=True,
+    pub_date = models.DateTimeField('date published', auto_now_add=True,
                                     db_index=True)
     image = models.ImageField(upload_to='recipes/', blank=True, null=True)
     cooking_time = models.IntegerField(verbose_name='cooking_time')
-    ingredients = models.ManyToManyField(
-        Ingredients,
-        through='RecipeIngredients',
-        through_fields=('recipe', 'ingredients')
+    ingredient = models.ManyToManyField(
+        Ingredient,
+        through='RecipeIngredient',
+        through_fields=('recipe', 'ingredient')
     )
-    slug = models.SlugField()
 
     def __str__(self):
-        # выводим название рецепта
         return self.title
 
     class Meta:
         ordering = ['-pub_date']
 
 
-class RecipeIngredients(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE,
-                                    related_name='Ingredient')
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='recipeingredient')
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
+                                   related_name='recipeingredient')
     quantity = models.IntegerField()
 
     def __str__(self):
-        return self.ingredients.dimension
+        return self.ingredient.dimension
 
 
 class FavoriteRecipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name='favor_by')
+                             related_name='favorite_recipe')
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="favor"
+        related_name='favorite_recipe'
     )
 
     def __str__(self):
@@ -76,12 +75,12 @@ class ShoppingList(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='shopper'
+        related_name='shopping_list'
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='recipe_list'
+        related_name='shopping_list'
     )
 
     def __str__(self):

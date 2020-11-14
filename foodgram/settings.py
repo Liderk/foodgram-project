@@ -174,3 +174,6 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
 SITE_ID = 2
+
+# numbers of items in paginator page
+PAGES = 6
