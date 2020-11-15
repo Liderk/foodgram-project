@@ -29,11 +29,11 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
     path('about-spec/', views.flatpage, {'url': '/about-spec/'}, name='spec'),
-    path("", include("recipes.urls"))
+    path('', include("recipes.urls"))
 ]
 
-handler404 = "foodgram.views.page_not_found"  # noqa
-handler500 = "foodgram.views.server_error"   # noqa
+handler404 = 'foodgram.views.page_not_found' # noqa
+handler500 = 'foodgram.views.server_error'   # noqa
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -3,7 +3,7 @@ from django.db import models
 from django.forms import CheckboxSelectMultiple
 
 from recipes.models import (FavoriteRecipe, Ingredient, Recipe,
-                            RecipeIngredient, ShoppingList, Tag)
+                            RecipeIngredient, ShoppingTransfer, Tag)
 
 
 class RecipeIngredientInline(admin.TabularInline):
@@ -56,7 +56,7 @@ class FollowRecipeAdmin(admin.ModelAdmin):
     empty_value_display = 'None'
 
 
-@admin.register(ShoppingList)
+@admin.register(ShoppingTransfer)
 class ShoppingListAdmin(admin.ModelAdmin):
     list_display = ('pk', 'recipe')
     empty_value_display = 'None'

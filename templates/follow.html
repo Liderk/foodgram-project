@@ -23,7 +23,7 @@
             </div>
             <div class="card-user__body">
                 <ul class="card-user__items">
-                        {% for recipe in item.author.recipe.all|slice:":3" %}
+                        {% for recipe in item.author.recipes.all|slice:":3" %}
                                 <li class="card-user__item">
                                     <div class="recipe">
                                         <a href="{% url 'recipe_view' recipe.id %}" class="link">
@@ -33,9 +33,9 @@
                                     </div>
                                 </li>
                         {% endfor %}
-                    {% if item.author.recipe.all.count|add:-3 > 0 %}
+                    {% if item.author.recipes.all.count|add:-3 > 0 %}
                     <li class="card-user__item">
-                        <a href="{% url 'profile' item.author.username %}" class="card-user__link link">Еще {{ item.author.recipe.all.count|add:-3 }} ...</a>
+                        <a href="{% url 'profile' item.author.username %}" class="card-user__link link">Еще {{ item.author.recipes.all.count|add:-3 }} ...</a>
                     </li>
                     {% endif %}
                 </ul>

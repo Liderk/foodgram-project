@@ -137,3 +137,6 @@ media/
 my_purchases.pdf
 /static/
 .idea
+.github/
+/deploy
+deploy/docker-compose.yaml

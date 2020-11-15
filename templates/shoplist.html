@@ -17,7 +17,7 @@
     </div>
     <div class="card-list card-list_column">
         <ul class="shopping-list">
-            {% for recipe in shopping_list %}
+            {% for recipe in shopping_roster %}
             <li class="shopping-list__item" data-id="{{ recipe.recipe.id }}">
                 <div class="recipe recipe_reverse">
                     <img src="{{ recipe.recipe.image.url }}" alt="{{ recipe.recipe.title }}" class="recipe__image recipe__image_big">

@@ -6,23 +6,20 @@ from .models import Tag
 User = get_user_model()
 
 
-def gen_shopping_list(request):
+def gen_shopping_roster(request):
     shopper = get_object_or_404(User, username=request.user.username)
-    shopping_list = shopper.shopping_list.all()
+    shopping_list = shopper.shoppingtransfer.all()
     ingredients = {}
     for item in shopping_list:
-        for obj in item.recipe.recipeingredient.all():
+        for obj in item.recipe.recipeingredients.all():
             name = obj.ingredient.title
             amount = {}
-            # как изменить значение в словаре, который находится внутри другого
-            # словаря, без проверки, я не придумал
             if name in ingredients:
                 ingredients[name][obj.ingredient.dimension] += obj.quantity
                 continue
             else:
                 amount[obj.ingredient.dimension] = obj.quantity
             ingredients[name] = amount.copy()
-    print(ingredients)
     return ingredients
 
 

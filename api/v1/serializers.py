@@ -1,5 +1,6 @@
-from recipes.models import FavoriteRecipe, Ingredient, ShoppingList
+from recipes.models import FavoriteRecipe, Ingredient, ShoppingTransfer
 from rest_framework import serializers
+
 from users.models import Follow
 
 
@@ -15,13 +16,13 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = '__all__'
-        model = ShoppingList
+        model = ShoppingTransfer
 
     def validate(self, data):
         super().validate(data)
         user = self.context.get('request_user')
-        recipe = self.context['request_recipe']
-        if ShoppingList.objects.filter(user=user, recipe=recipe).exists():
+        recipe = self.context.get('id')
+        if ShoppingTransfer.objects.filter(user=user, recipe=recipe).exists():
             raise serializers.ValidationError('Already purchased')
         return data
 
@@ -37,7 +38,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
     def validate(self, data):
         super().validate(data)
         user = self.context.get('request_user')
-        recipe = self.context['request_recipe']
+        recipe = self.context.get('id')
         if FavoriteRecipe.objects.filter(user=user, recipe=recipe).exists():
             raise serializers.ValidationError('Already added')
         return data
@@ -54,7 +55,7 @@ class FollowSerializer(serializers.ModelSerializer):
     def validate(self, data):
         super().validate(data)
         user = self.context.get('request_user')
-        author = self.context['author_recipe']
+        author = self.context.get('author')
         if Follow.objects.filter(user=user, author=author).exists():
             raise serializers.ValidationError('subscriptions already created')
         return data

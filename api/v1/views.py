@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from recipes.models import FavoriteRecipe, Ingredient, Recipe, ShoppingList
+from recipes.models import FavoriteRecipe, Ingredient, Recipe, ShoppingTransfer
 from rest_framework import filters, mixins, status, viewsets
 from rest_framework.response import Response
-from users.models import Follow
 
 from .serializers import (FavoriteSerializer, FollowSerializer,
                           IngredientSerializer, PurchaseSerializer)
+from users.models import Follow
 
 User = get_user_model()
 
@@ -20,22 +20,24 @@ class IngredientListView(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class PurchaseViewSet(viewsets.ModelViewSet):
-    queryset = ShoppingList.objects.all()
+    queryset = ShoppingTransfer.objects.all()
     serializer_class = PurchaseSerializer
 
-    def create(self, request, *args, **kwargs):
-        recipe = get_object_or_404(Recipe, pk=request.data.get('id'))
-        serializer = PurchaseSerializer(data=request.data, context={
-            'request_user': request.user,
-            'request_recipe': recipe})
+
+    def perform_create(self, serializer):
+        recipe = get_object_or_404(Recipe, pk=self.request.data.get('id'))
+        serializer = PurchaseSerializer(data=self.request.data, context={
+            'request_user': self.request.user})
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user, recipe=recipe)
+        serializer.save(user=self.request.user, recipe=recipe)
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
 
     def destroy(self, request, *args, **kwargs):
         recipe = get_object_or_404(Recipe, pk=kwargs['pk'])
         shoppinglist = get_object_or_404(
-            ShoppingList,
+            ShoppingTransfer,
             recipe=recipe,
             user=request.user)
         shoppinglist.delete()
@@ -46,13 +48,12 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = FavoriteRecipe.objects.all()
     serializer_class = FavoriteSerializer
 
-    def create(self, request, *args, **kwargs):
-        recipe = get_object_or_404(Recipe, pk=request.data.get('id'))
-        serializer = FavoriteSerializer(data=request.data, context={
-            'request_user': request.user,
-            'request_recipe': recipe})
+    def perform_create(self, serializer):
+        recipe = get_object_or_404(Recipe, pk=self.request.data.get('id'))
+        serializer = FavoriteSerializer(data=self.request.data, context={
+            'request_user': self.request.user})
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user, recipe=recipe)
+        serializer.save(user=self.request.user, recipe=recipe)
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
@@ -69,13 +70,14 @@ class FollowViewSet(viewsets.ModelViewSet):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
 
-    def create(self, request, *args, **kwargs):
-        author = get_object_or_404(User, pk=request.data.get('id'))
-        serializer = FollowSerializer(data=request.data, context={
-            'request_user': request.user,
-            'author_recipe': author})
+    def perform_create(self, serializer):
+        author = get_object_or_404(User, pk=self.request.data.get('id'))
+        serializer = FollowSerializer(data=self.request.data, context={
+            'request_user': self.request.user,
+            'author': author
+        })
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user, author=author)
+        serializer.save(user=self.request.user, author=author)
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):

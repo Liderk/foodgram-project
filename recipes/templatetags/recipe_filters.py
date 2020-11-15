@@ -1,7 +1,6 @@
 from django import template
-from recipes.models import ShoppingList
 from django.contrib.auth import get_user_model
-from recipes.models import FavoriteRecipe
+from recipes.models import FavoriteRecipe, ShoppingTransfer
 
 User = get_user_model()
 
@@ -10,7 +9,7 @@ register = template.Library()
 
 @register.filter
 def addclass(field, css):
-    return field.as_widget(attrs={"class": css})
+    return field.as_widget(attrs={'class': css})
 
 
 @register.filter
@@ -47,9 +46,9 @@ def is_favorite(recipe, user):
 
 @register.filter
 def is_shop(recipe, user):
-    return ShoppingList.objects.filter(user=user, recipe=recipe).exists()
+    return ShoppingTransfer.objects.filter(user=user, recipe=recipe).exists()
 
 
 @register.simple_tag
-def shoplist_count(user):
-    return ShoppingList.objects.filter(user=user).distinct().count()
+def shoproster_count(user):
+    return ShoppingTransfer.objects.filter(user=user).distinct().count()
