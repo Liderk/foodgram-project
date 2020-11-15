@@ -24,7 +24,7 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`/api/v1/purchases/${id}/`, {
+    return fetch(`/api/v1/purchases/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    return fetch(`/api/v1/subscriptions/${id}/`, {
+    return fetch(`/api/v1/subscriptions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ class Api {
       })
   }
   addFavorites (id)  {
-    return fetch(`/api/v1/favorites/${id}/`, {
+    return fetch(`/api/v1/favorites/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        return fetch(`/api/v1/ingredients?search=${text}`, {
+        return fetch(`/api/v1/ingredients/?search=${text}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': this.getToken()
