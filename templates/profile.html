@@ -7,7 +7,7 @@
     {% endblock %}
     {% load recipe_filters %}
     {% block nav %}
-        {% include 'nav.html' %}
+        {% include 'includes/nav.html' %}
     {% endblock %}
     {% block content %}
     <main class="main container">
@@ -31,12 +31,12 @@
 
         <div class="card-list">
             {% for recipe in page %}
-            {% include 'recipe_item.html' %}
+            {% include 'includes/recipe_item.html' %}
             {% endfor %}
         </div>
     </div>
         {% if page.has_other_pages %}
-            {% include 'paginator.html' with items=page paginator=paginator %}
+            {% include 'includes/paginator.html' with items=page paginator=paginator %}
         {% endif %}
     </main>
     {% endblock %}

@@ -1,12 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.db.utils import IntegrityError
 from django.shortcuts import get_object_or_404
 from recipes.models import FavoriteRecipe, Ingredient, Recipe, ShoppingList
-from rest_framework import filters, generics, mixins, status, viewsets
-from rest_framework.decorators import api_view
+from rest_framework import filters, mixins, status, viewsets
 from rest_framework.response import Response
-
 from users.models import Follow
+
 from .serializers import (FavoriteSerializer, FollowSerializer,
                           IngredientSerializer, PurchaseSerializer)
 

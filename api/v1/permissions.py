@@ -1,4 +1,4 @@
-from rest_framework import permissions, exceptions
+from rest_framework import exceptions, permissions
 
 
 class MethodPermissions(permissions.BasePermission):

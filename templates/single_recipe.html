@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'pages/single.css' %}">
     {% endblock %}
     {% block nav %}
-        {% include 'nav.html'  %}
+        {% include 'includes/nav.html'  %}
     {% endblock %}
     {% block content %}
     {% load recipe_filters %}
@@ -17,7 +17,7 @@
                 <div class="single-card__header-info">
                     <h1 class="single-card__title"> {{ recipe.title }} </h1>
                     <div class="single-card__favorite">
-                        {% include 'button_favorite.html' %}
+                        {% include 'includes/button_favorite.html' %}
                     </div>
                 </div>
                 <ul class="single-card__items">
@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <ul class="single-card__items">
-                     <li class="single-card__item">{% include 'button_buy.html' %}</li>
+                     <li class="single-card__item">{% include 'includes/button_buy.html' %}</li>
                     {% if user.username != author.username %}
                     {% if user.is_authenticated %}
                         {% if following %}

@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="{% static 'pages/form.css' %}">
         {% endblock %}
     {% block nav %}
-        {% include 'nav.html'  %}
+        {% include 'includes/nav.html'  %}
     {% endblock %}
 {% load recipe_filters %}
 {% block content %}
@@ -17,7 +17,7 @@
     </div>
 
     <!--Загрузка контейнера с редактированием рецепта-->
-    {% include 'base-recipe.html' %}
+    {% include 'includes/base-recipe.html' %}
 <script src="{% static 'js/config/config.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
 <script src="{% static 'js/utils/debouncing.js' %}"></script>

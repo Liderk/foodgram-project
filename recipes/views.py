@@ -3,11 +3,12 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
 from foodgram.settings import PAGES
+from users.models import Follow
 from wkhtmltopdf.views import PDFTemplateResponse
 
-from recipes.models import (Ingredient, Recipe, RecipeIngredient,
-                            ShoppingList, User)
-from users.models import Follow
+from recipes.models import (Ingredient, Recipe, RecipeIngredient, ShoppingList,
+                            User)
+
 from .forms import RecipeForm
 from .utils import gen_shopping_list, get_ingredients, get_recipe
 
@@ -128,7 +129,8 @@ def follow(request):
 
 
 def favorites_recipe(request):
-    recipe_list = Recipe.objects.filter(favorite_recipe__user__id=request.user.id)
+    recipe_list = Recipe.objects.filter(
+        favorite_recipe__user__id=request.user.id)
     recipe_by_tag = get_recipe(request, recipe_list)
     paginator = Paginator(recipe_by_tag.get('recipes'), PAGES)
     page_number = request.GET.get('page')
