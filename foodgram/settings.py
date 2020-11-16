@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 import os
 env = environ.Env()
-env.read_env(env.str('ENV_PATH', './.env/.deb_env'))
+env.read_env(env.str('ENV_PATH', './.env/.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '-rvt(c8c#^844_w$k$a%nc_zd$dveijx9l-bn3541*uj@v*38@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+# DEBUG = os.environ.get('DEBUG')
+DEBUG = True
 
 # DEBUG = False
 ALLOWED_HOSTS = [
@@ -35,6 +36,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
+    '*',
 ]
 
 
@@ -107,8 +109,8 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
         'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
     }
@@ -155,7 +157,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
 WKHTMLTOPDF_CMD_OPTIONS = {
     'margin-bottom': 10,
     'margin-left': 20,

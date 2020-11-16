@@ -28,8 +28,10 @@
             </li>
             {% endfor %}
         </ul>
-        <a href="{% url 'download' %}"><button class="button button_style_blue">Скачать список</button></a>
 
+        {% if user.is_authenticated %}
+        <a href="{% url 'download' %}"><button class="button button_style_blue">Скачать список</button></a>
+        {% endif %}
 
     </div>
 </main>

@@ -45,9 +45,6 @@ def new_recipe(request):
     user = get_object_or_404(User, username=request.user)
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     ingredients = {}
-    # или же имеется ввиду вообще убрать отсюда проверку POST?
-    # но тогда форму нужно будет прогонять через cleaned_data же? И
-    # А как это сдлеать, если в форму будет посылаться ошибка?
 
     if request.method == 'POST':
         ingredients = get_ingredients(request)

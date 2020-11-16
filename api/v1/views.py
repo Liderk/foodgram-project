@@ -23,7 +23,6 @@ class PurchaseViewSet(viewsets.ModelViewSet):
     queryset = ShoppingTransfer.objects.all()
     serializer_class = PurchaseSerializer
 
-
     def perform_create(self, serializer):
         recipe = get_object_or_404(Recipe, pk=self.request.data.get('id'))
         serializer = PurchaseSerializer(data=self.request.data, context={
@@ -31,8 +30,6 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, recipe=recipe)
         return Response({'success': True}, status=status.HTTP_201_CREATED)
-
-
 
     def destroy(self, request, *args, **kwargs):
         recipe = get_object_or_404(Recipe, pk=kwargs['pk'])
