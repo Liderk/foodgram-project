@@ -86,7 +86,7 @@ jobs:
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             sudo docker-compose stop && sudo docker container prune -f
-            sudo docker image rm -f liderk/foodgram_final:latest
+            sudo docker image rm -f liderk/foodgram_final:1.0-alpine
             sudo docker-compose up -d --build
   send_message:
     runs-on: ubuntu-latest
