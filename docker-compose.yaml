@@ -15,7 +15,6 @@ services:
       - /home/yc-user/app/.env
 
   web:
-    build: .
     image: liderk/foodgram:latest
     command: sh -c "python manage.py migrate && gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000"
     volumes:
