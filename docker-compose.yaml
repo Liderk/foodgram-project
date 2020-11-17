@@ -12,7 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - /home/yc-user/app/.env
+      - ./.env
 
   web:
     image: liderk/foodgram_final:latest
@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
     env_file:
-      - /home/yc-user/app/.env
+      - ./.env
 
   nginx:
     build: nginx
