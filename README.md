@@ -1,5 +1,7 @@
-![foodgram](https://github.com/Liderk/foodgram-project/workflows/foodgram/badge.svg)
+![foodgram workflow](https://github.com/Liderk/foodgram-project/workflows/foodgram%20workflow/badge.svg)
 # foodgram-project
+
+Для ревью сайт доступен на http://178.154.224.24/
 
 ## Описание
 Онлайн-сервис, где пользователи могут сохранять и публиковать свои рецепты, 
