@@ -20,7 +20,7 @@
             {% for recipe in shopping_roster %}
             <li class="shopping-list__item" data-id="{{ recipe.recipe.id }}">
                 <div class="recipe recipe_reverse">
-                    <img src="{% if recipe.image %} {{ recipe.image.url }} {% endif %}"  alt="Автор не загрузил фото к этому рецепту" class="recipe__image recipe__image_big">
+                    <img src="{% if recipe.recipe.image %} {{ recipe.recipe.image.url }} {% endif %}"  alt="Автор не загрузил фото к этому рецепту" class="recipe__image recipe__image_big">
                     <h3 class="recipe__title">{{ recipe.recipe.title }}</h3>
                     <p class="recipe__text"><span class="icon-time"></span> {{ recipe.recipe.cooking_time }} мин.</p>
                 </div>
