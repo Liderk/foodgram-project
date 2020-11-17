@@ -27,7 +27,7 @@
                                 <li class="card-user__item">
                                     <div class="recipe">
                                         <a href="{% url 'recipe_view' recipe.id %}" class="link">
-                                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe__image"></a>
+                                            <img src="{% if recipe.image %}{{ recipe.image.url }}{% endif %}" alt="Автор не загрузил фото к этому рецепту" class="recipe__image"></a>
                                         <h3 class="recipe__title">{{ recipe.title }}</h3>
                                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                                     </div>

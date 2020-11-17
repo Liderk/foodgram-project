@@ -1,6 +1,6 @@
 {% load recipe_filters %}
 <div class="card" data-id="{{ recipe.id }}">
-            <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{% if recipe.image %}{{ recipe.image.url }}{% endif %}" alt="{{ recipe.title }}" class="card__image"></a>
+            <a href="{% url 'recipe_view' recipe.id %}" class="link" target="_blank"><img src="{% if recipe.image %}{{ recipe.image.url }}{% endif %}" alt="Автор не загрузил фото к этому рецепту" class="card__image"></a>
             <div class="card__body">
                 <a class="card__title link" href="{% url 'recipe_view' recipe.id %}" target="_blank">{{ recipe.title }}</a>
                 <ul class="card__items">
