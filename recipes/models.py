@@ -14,7 +14,7 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=255)
     dimension = models.CharField(max_length=10, verbose_name='Количество')
 
     def __str__(self):
