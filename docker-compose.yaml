@@ -12,11 +12,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - /home/lid/PycharmProjects/foodgram-project/.env/.env
+      - /home/yc-user/app/.env
 
   web:
     build: .
-    restart: always
+    image: liderk/foodgram:latest
     command: sh -c "python manage.py migrate && gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - static_volume:/code/static/
@@ -26,7 +26,7 @@ services:
     depends_on:
       - db
     env_file:
-      - /home/lid/PycharmProjects/foodgram-project/.env/.env
+      - /home/yc-user/app/.env
 
   nginx:
     build: nginx
